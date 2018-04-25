@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="neetconsultant:war">
+    <output-path>$PROJECT_DIR$/neetconsultant/target</output-path>
+    <root id="archive" name="neet-consultant.war">
+      <element id="artifact" artifact-name="neetconsultant:war exploded" />
+    </root>
+  </artifact>
+</component>
