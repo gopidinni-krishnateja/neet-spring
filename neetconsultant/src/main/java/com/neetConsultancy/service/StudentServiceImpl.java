@@ -1,6 +1,7 @@
 package com.neetConsultancy.service;
 
 import com.neetConsultancy.dao.StudentDAO;
+import com.neetConsultancy.model.Franchise;
 import com.neetConsultancy.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,8 @@ public class StudentServiceImpl implements StudentService {
         studentDAO.deleteStudent(id);
     }
 
-    public List<Student> filterStudents(String name, int franchiseId) {
-        return studentDAO.filterStudents(name,franchiseId);
+    public List<Student> filterStudents(String name, Franchise franchise) {
+        return studentDAO.filterStudents(name,franchise);
     }
 
     public List<Student> getAllStudents() {

@@ -9,13 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.ws.Response;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -25,7 +20,7 @@ public class FranchiseController {
     @Autowired
     StudentService studentService;
 
-    // Add Franchise Record
+    // Add and Update Franchise Record
     @RequestMapping(value = "/franchise/add",method = RequestMethod.POST)
     public ResponseEntity<Franchise>  addFranchise(@RequestBody Franchise franchise){
         HttpHeaders headers = new HttpHeaders();
@@ -63,5 +58,23 @@ public class FranchiseController {
         student.setFranchise(franchise);
         franchiseService.updateFranchise(franchise);
         return new ResponseEntity<Franchise>(headers, HttpStatus.CREATED);
+    }
+
+    //Delete one franchise Record
+    @RequestMapping(value = "franchise/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Franchise> deleteUser(@PathVariable("id") int id) {
+        Franchise franchise = franchiseService.getFranchise(id);
+        if (franchise == null) {
+            return new ResponseEntity<Franchise>(HttpStatus.NOT_FOUND);
+        }
+        franchiseService.deleteFranchise(id);
+        return new ResponseEntity<Franchise>(HttpStatus.OK);
+    }
+
+    //Get all Franchises
+    @RequestMapping(value = "franchises",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Franchise>> getAllFranchises(){
+        List<Franchise> franchises=franchiseService.getAllFranchises();
+        return ResponseEntity.ok().body(franchises);
     }
 }

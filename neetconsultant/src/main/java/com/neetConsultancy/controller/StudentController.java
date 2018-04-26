@@ -1,6 +1,8 @@
 package com.neetConsultancy.controller;
 
+import com.neetConsultancy.model.Franchise;
 import com.neetConsultancy.model.Student;
+import com.neetConsultancy.service.FranchiseService;
 import com.neetConsultancy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,12 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
+import java.io.File;
 import java.util.List;
 
 @RestController
 public class StudentController {
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    FranchiseService franchiseService;
+
     @RequestMapping(value = "/index")
     public ModelAndView homePage()
     {
@@ -64,6 +72,17 @@ public class StudentController {
     @RequestMapping(value = "students",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Student>> getAllStudents(){
         List<Student> students=studentService.getAllStudents();
+        return ResponseEntity.ok().body(students);
+    }
+
+    // Search franchise students by first Name
+    @RequestMapping(value = "students/{id}/{name}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Student>> searchStudents(@PathVariable("id") int id,@PathVariable("name") String name){
+        Franchise franchise = franchiseService.getFranchise(id);
+        List<Student> students=franchise.getStudents();
+        if(students.size()==0){
+          return new ResponseEntity<List<Student>>(HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok().body(students);
     }
 

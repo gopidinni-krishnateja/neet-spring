@@ -1,5 +1,6 @@
 package com.neetConsultancy.dao;
 
+import com.neetConsultancy.model.Franchise;
 import com.neetConsultancy.model.Student;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -31,12 +32,13 @@ public class StudentDAOimpl implements StudentDAO{
         this.sessionFactory.getCurrentSession().delete(student);
     }
 
-    public List<Student> filterStudents(String studentName, int franchiseId) {
+    public List<Student> filterStudents(String studentName, Franchise franchise) {
         Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Student.class)
-                .add(Restrictions.and(Restrictions.eq("id",franchiseId),Restrictions.like("firstName",studentName)));
+                .add(Restrictions.and(Restrictions.eq("franchise",franchise),Restrictions.like("firstName","%"+studentName+"%").ignoreCase()));
         return criteria.list();
     }
 
+    
     public List<Student> getAllStudents() {
         Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Student.class);
         return criteria.list();

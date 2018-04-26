@@ -1,5 +1,6 @@
 package com.neetConsultancy.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neetConsultancy.enums.Gender;
 import com.neetConsultancy.enums.Role;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -81,6 +82,7 @@ public class Student {
     private String lane2;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinColumn(name="franchise_id")
     private Franchise franchise;
 
