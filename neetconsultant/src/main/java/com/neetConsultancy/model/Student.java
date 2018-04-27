@@ -1,5 +1,6 @@
 package com.neetConsultancy.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neetConsultancy.enums.Gender;
 import com.neetConsultancy.enums.Role;
@@ -82,7 +83,7 @@ public class Student {
     private String lane2;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name="franchise_id")
     private Franchise franchise;
 

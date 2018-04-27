@@ -1,6 +1,7 @@
 package com.neetConsultancy.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.neetConsultancy.enums.Gender;
 import com.neetConsultancy.enums.Role;
 import org.hibernate.annotations.Type;
@@ -263,7 +264,7 @@ public class Franchise implements Serializable{
     private String lane2;
 
     @OneToMany(mappedBy = "franchise",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Student> students;
 
 
